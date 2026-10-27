@@ -1,26 +1,127 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-bone: #f1ece2;
+  --color-ink: #15130f;
+  --color-ink-2: #57503f;
+  --color-flame: #f97316;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display: var(--font-instrument), Georgia, "Times New Roman", serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bone);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  overflow: hidden;
+  overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: var(--color-flame);
+  color: #1a0f02;
+}
+
+.checker {
+  background-image: linear-gradient(45deg, rgba(21, 19, 15, 0.05) 25%, transparent 25%, transparent 75%, rgba(21, 19, 15, 0.05) 75%),
+    linear-gradient(45deg, rgba(21, 19, 15, 0.05) 25%, transparent 25%, transparent 75%, rgba(21, 19, 15, 0.05) 75%);
+  background-size: 14px 14px;
+  background-position: 0 0, 7px 7px;
+}
+
+button,
+a,
+input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes wheelIn {
+  from {
+    opacity: 0;
+    transform: rotate(-12deg) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.wheel-in {
+  animation: wheelIn 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes sectorIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.sector-in {
+  opacity: 0;
+  animation: sectorIn 460ms ease both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-ring {
+  animation: turn 52s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+.spin-ring-r {
+  animation: turn 74s linear infinite reverse;
+  transform-origin: 50% 50%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wheel-in,
+  .sector-in,
+  .rise,
+  .spin-ring,
+  .spin-ring-r {
+    animation: none;
+    opacity: 1;
+  }
+  * {
+    scroll-behavior: auto;
+  }
 }
