@@ -27,3 +27,4 @@ Open http://localhost:3000.
 ## stack
 
 Next.js 16 (App Router), React 19, Tailwind 4, canvas 2D, `gifuct-js` + `gifenc` for gif frames.
+# Toolcaholic
